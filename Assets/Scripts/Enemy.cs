@@ -1,44 +1,59 @@
 using UnityEngine;
-using UnityEngine.AI; // Necesario para usar NavMeshAgent
+using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshAgent))]
 public class Enemy : MonoBehaviour
 {
-    [Header("Stats Settings")]
-    public float health = 10.0f; // Vida de cada enemigo
+    [Header("Enemy Stats")]
+    public float health = 10.0f;
+
+    [Header("Attack Settings")]
+    public int damageToPlayer = 10;     // Tu script recibe un entero (int)
+    public float attackRange = 2.0f;
+    public float attackCooldown = 1.0f;
+    private float nextAttackTime = 0f;
+
     private Transform playerTarget;
     private NavMeshAgent navAgent;
+    private Salud playerSalud;          // Conectamos con tu script
 
     void Start()
     {
-        // 1. Obtener la referencia del NavMeshAgent
         navAgent = GetComponent<NavMeshAgent>();
+        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
 
-        // 2. Buscar automáticamente al jugador en la escena usando el Tag
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-
-        if (player != null)
+        if (playerObj != null)
         {
-            playerTarget = player.transform;
-        }
-        else
-        {
-            Debug.LogError("No se encontró ningún objeto con el tag 'Player' en la escena.");
+            playerTarget = playerObj.transform;
+            playerSalud = playerObj.GetComponent<Salud>(); // Obtiene tu script de vida
         }
     }
 
     void Update()
     {
-        // 3. Actualizar constantemente el destino del agente hacia la posición del jugador
-        if (playerTarget != null)
+        if (playerTarget != null && playerSalud != null)
         {
-            navAgent.SetDestination(playerTarget.position);
+            float distanceToPlayer = Vector3.Distance(transform.position, playerTarget.position);
+
+            if (distanceToPlayer > attackRange)
+            {
+                navAgent.SetDestination(playerTarget.position);
+            }
+            else
+            {
+                if (Time.time >= nextAttackTime)
+                {
+                    playerSalud.Danar(damageToPlayer); // Llama a tu función
+                    nextAttackTime = Time.time + attackCooldown;
+                }
+            }
         }
     }
+
+    // Se mantiene esto para que la bala pueda matar al enemigo
     public void TakeDamage(float damageAmount)
     {
         health -= damageAmount;
-
         if (health <= 0)
         {
             Destroy(gameObject);
