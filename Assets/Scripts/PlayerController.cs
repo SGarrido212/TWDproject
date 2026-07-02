@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour
@@ -22,6 +23,11 @@ public class PlayerController : MonoBehaviour
     [Header("Shooting Settings")]
     public GameObject bulletPrefab; // Aquí pones el Prefab de la bala
     public Transform firePoint;
+
+    [Header("Ammo Settings")]
+    public int maxAmmo = 20;
+    private int currentAmmo;
+    public Text ammoText;
 
     private CharacterController characterController;
     private float verticalVelocity;
@@ -60,6 +66,9 @@ public class PlayerController : MonoBehaviour
         {
             playerCamera.parent = null;
         }
+
+        currentAmmo = maxAmmo;
+        UpdateAmmoHUD();
     }
 
     void Update()
@@ -102,7 +111,7 @@ public class PlayerController : MonoBehaviour
         // 4. Mover al personaje
         characterController.Move(velocity * Time.deltaTime);
 
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetButtonDown("Fire1") && currentAmmo > 0)
         {
             Shoot();
         }
@@ -110,23 +119,12 @@ public class PlayerController : MonoBehaviour
 
     void Shoot()
     {
-        if (bulletPrefab == null)
-        {
-            Debug.LogError("Error: No has arrastrado el Prefab de la Bala al jugador.");
-            return;
-        }
-        if (firePoint == null)
-        {
-            Debug.LogError("Error: No has arrastrado el FirePoint al jugador.");
-            return;
-        }
-        if (camComponent == null)
-        {
-            Debug.LogError("Error: El script no pudo encontrar la cámara.");
-            return;
-        }
+        if (bulletPrefab == null || firePoint == null || camComponent == null) return;
 
-        // Si pasa todas las revisiones, dispara normal:
+        // Descontar bala y actualizar texto
+        currentAmmo--;
+        UpdateAmmoHUD();
+
         Ray ray = camComponent.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
         RaycastHit hit;
         Vector3 targetPoint;
@@ -144,6 +142,14 @@ public class PlayerController : MonoBehaviour
 
         GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
         bullet.transform.forward = direction.normalized;
+    }
+
+    void UpdateAmmoHUD()
+    {
+        if (ammoText != null)
+        {
+            ammoText.text = "Balas " + currentAmmo + "/" + maxAmmo;
+        }
     }
 
     void LateUpdate()
