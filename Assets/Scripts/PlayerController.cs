@@ -23,6 +23,8 @@ public class PlayerController : MonoBehaviour
     [Header("Shooting Settings")]
     public GameObject bulletPrefab; // Aquí pones el Prefab de la bala
     public Transform firePoint;
+    public float fireRate = 0.5f;
+    private float nextTimeToFire = 0f;
 
     [Header("Ammo Settings")]
     public int maxAmmo = 20;
@@ -111,8 +113,10 @@ public class PlayerController : MonoBehaviour
         // 4. Mover al personaje
         characterController.Move(velocity * Time.deltaTime);
 
-        if (Input.GetButtonDown("Fire1") && currentAmmo > 0)
+        if (Input.GetButtonDown("Fire1") && currentAmmo > 0 && Time.time >= nextTimeToFire)
         {
+            // Calculamos en qué momento exacto del futuro podrá volver a disparar
+            nextTimeToFire = Time.time + fireRate;
             Shoot();
         }
     }
