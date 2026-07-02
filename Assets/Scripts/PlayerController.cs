@@ -128,4 +128,14 @@ public class PlayerController : MonoBehaviour
         playerCamera.position = targetPosition + camRotation * camDirection;
         playerCamera.LookAt(targetPosition);
     }
+    public void AddAmmo(int amount)
+    {
+        currentAmmo += amount;
+        if (currentAmmo > maxAmmo)
+        {
+            currentAmmo = maxAmmo;
+        }
+
+        UpdateAmmoHUD();
+    }
 }

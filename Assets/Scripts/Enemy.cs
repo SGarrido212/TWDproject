@@ -15,7 +15,11 @@ public class Enemy : MonoBehaviour
 
     private Transform playerTarget;
     private NavMeshAgent navAgent;
-    private Salud playerSalud;          // Conectamos con tu script
+    private Salud playerSalud;
+
+    [Header("Drop Settings")]
+    public GameObject ammoDropPrefab;
+    public float dropChance = 0.3f;
 
     void Start()
     {
@@ -56,6 +60,17 @@ public class Enemy : MonoBehaviour
         health -= damageAmount;
         if (health <= 0)
         {
+            // --- LÓGICA DEL DROP (30% de probabilidad) ---
+            if (ammoDropPrefab != null && Random.value <= dropChance)
+            {
+                Instantiate(ammoDropPrefab, transform.position + (Vector3.up * 0.5f), Quaternion.identity);
+            }
+
+            if (OleadasManager.inst != null)
+            {
+                OleadasManager.inst.EnemigoMuerto();
+            }
+
             Destroy(gameObject);
         }
     }
