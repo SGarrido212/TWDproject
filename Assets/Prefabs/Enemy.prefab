@@ -145,8 +145,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 2.326108, z: 1}
+  m_Center: {x: 0, y: 0.663054, z: 0}
 --- !u!195 &6519212109594492579
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -186,9 +186,9 @@ MonoBehaviour:
   attackRange: 1.25
   attackCooldown: 1
   ammoDropPrefab: {fileID: 5807832885404523964, guid: 192ed875b1ca61e4c9045b23c35da9e6, type: 3}
-  ammodropChance: 0.3
+  ammodropChance: 0.4
   healthDropPrefab: {fileID: 5895729950044347072, guid: 68a0ebbb18e1de84ba055775f0564c05, type: 3}
-  healthDropChance: 0.4
+  healthDropChance: 0.3
 --- !u!1001 &3716798711568431129
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -207,7 +207,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3ea946212e7416c4f8a3e7a404166265, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.05087
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3ea946212e7416c4f8a3e7a404166265, type: 3}
       propertyPath: m_LocalRotation.w
@@ -240,6 +240,18 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 3ea946212e7416c4f8a3e7a404166265, type: 3}
       propertyPath: m_Name
       value: Zombie
+      objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: 3ea946212e7416c4f8a3e7a404166265, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: de34a067310cc154f9795ca4beecc570, type: 2}
+    - target: {fileID: 5866666021909216657, guid: 3ea946212e7416c4f8a3e7a404166265, type: 3}
+      propertyPath: m_UpdateMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7751348785765063920, guid: 3ea946212e7416c4f8a3e7a404166265, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
