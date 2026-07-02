@@ -19,7 +19,9 @@ public class Enemy : MonoBehaviour
 
     [Header("Drop Settings")]
     public GameObject ammoDropPrefab;
-    public float dropChance = 0.3f;
+    public float ammodropChance = 0.3f;
+    public GameObject healthDropPrefab;
+    public float healthDropChance = 0.40f;
 
     void Start()
     {
@@ -60,12 +62,20 @@ public class Enemy : MonoBehaviour
         health -= damageAmount;
         if (health <= 0)
         {
-            // --- LÓGICA DEL DROP (30% de probabilidad) ---
-            if (ammoDropPrefab != null && Random.value <= dropChance)
+            float randomRoll = Random.value;
+
+            // Si cae en el primer 40%, suelta botiquín
+            if (healthDropPrefab != null && randomRoll <= healthDropChance)
+            {
+                Instantiate(healthDropPrefab, transform.position + (Vector3.up * 0.5f), Quaternion.identity);
+            }
+            // Si no fue botiquín, verificamos si cae en el siguiente 30% para las balas
+            else if (ammoDropPrefab != null && randomRoll <= (healthDropChance + ammodropChance))
             {
                 Instantiate(ammoDropPrefab, transform.position + (Vector3.up * 0.5f), Quaternion.identity);
             }
 
+            // --- AVISO AL ADMINISTRADOR DE RONDAS ---
             if (OleadasManager.inst != null)
             {
                 OleadasManager.inst.EnemigoMuerto();

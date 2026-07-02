@@ -186,7 +186,9 @@ MonoBehaviour:
   attackRange: 1.25
   attackCooldown: 1
   ammoDropPrefab: {fileID: 5807832885404523964, guid: 192ed875b1ca61e4c9045b23c35da9e6, type: 3}
-  dropChance: 0.3
+  ammodropChance: 0.3
+  healthDropPrefab: {fileID: 5895729950044347072, guid: 68a0ebbb18e1de84ba055775f0564c05, type: 3}
+  healthDropChance: 0.4
 --- !u!1001 &3716798711568431129
 PrefabInstance:
   m_ObjectHideFlags: 0
