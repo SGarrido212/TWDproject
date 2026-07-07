@@ -8,7 +8,7 @@ public class Enemy : MonoBehaviour
     public float health = 10.0f;
 
     [Header("Attack Settings")]
-    public int damageToPlayer = 10;     // Tu script recibe un entero (int)
+    public int damageToPlayer = 10;    
     public float attackRange = 2.0f;
     public float attackCooldown = 1.0f;
     private float nextAttackTime = 0f;
@@ -31,7 +31,7 @@ public class Enemy : MonoBehaviour
         if (playerObj != null)
         {
             playerTarget = playerObj.transform;
-            playerSalud = playerObj.GetComponent<Salud>(); // Obtiene tu script de vida
+            playerSalud = playerObj.GetComponent<Salud>(); 
         }
     }
 
@@ -49,7 +49,7 @@ public class Enemy : MonoBehaviour
             {
                 if (Time.time >= nextAttackTime)
                 {
-                    playerSalud.Danar(damageToPlayer); // Llama a tu función
+                    playerSalud.Danar(damageToPlayer); 
                     nextAttackTime = Time.time + attackCooldown;
                 }
             }
@@ -64,18 +64,18 @@ public class Enemy : MonoBehaviour
         {
             float randomRoll = Random.value;
 
-            // Si cae en el primer 40%, suelta botiquín
+            
             if (healthDropPrefab != null && randomRoll <= healthDropChance)
             {
                 Instantiate(healthDropPrefab, transform.position + (Vector3.up * 0.5f), Quaternion.identity);
             }
-            // Si no fue botiquín, verificamos si cae en el siguiente 30% para las balas
+            
             else if (ammoDropPrefab != null && randomRoll <= (healthDropChance + ammodropChance))
             {
                 Instantiate(ammoDropPrefab, transform.position + (Vector3.up * 0.5f), Quaternion.identity);
             }
 
-            // --- AVISO AL ADMINISTRADOR DE RONDAS ---
+            
             if (OleadasManager.inst != null)
             {
                 OleadasManager.inst.EnemigoMuerto();

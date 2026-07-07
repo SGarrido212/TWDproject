@@ -8,13 +8,13 @@ public class HealthPickup : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            // Busca tu script de Salud en el jugador
+            
             Salud saludJugador = other.GetComponent<Salud>();
 
             if (saludJugador != null)
             {
                 saludJugador.Curar(puntosDeCura);
-                Destroy(gameObject); // El botiquín desaparece al recogerse
+                Destroy(gameObject);
             }
         }
     }

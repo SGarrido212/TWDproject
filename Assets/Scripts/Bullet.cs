@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    public float speed = 20f; // Velocidad de la bala
-    public float lifeTime = 3f; // Tiempo antes de desaparecer
+    public float speed = 20f; 
+    public float lifeTime = 3f; 
     public float damage = 10f;
 
     void Start()
@@ -13,7 +13,7 @@ public class Bullet : MonoBehaviour
 
     void Update()
     {
-        // Mueve la bala hacia adelante constantemente
+        
         transform.Translate(Vector3.forward * speed * Time.deltaTime);
     }
 
@@ -25,10 +25,10 @@ public class Bullet : MonoBehaviour
             Enemy enemy = other.GetComponent<Enemy>();
             if (enemy != null)
             {
-                enemy.TakeDamage(damage); // Le quita la vida
+                enemy.TakeDamage(damage); 
             }
 
-            Destroy(gameObject); // La bala se destruye al impactar
+            Destroy(gameObject); 
         }
     }
 }
